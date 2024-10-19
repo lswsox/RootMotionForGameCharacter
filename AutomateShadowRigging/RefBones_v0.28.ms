@@ -25,7 +25,7 @@ rollout RefBones "Reference Bones Tool v0.28" width:200
 	checkbox uiChkOptAutoParent "Auto Parent" checked:true align:#left toolTip:"Default: On\r생성된 Ref본들의 계층구조가 자동으로 연결됩니다."
 	
 	/*
-	Set Scalable Biped 버튼은 척추와 쇄골의 위치를 보정해주는 서브애님까지 추가하는 작업이 필요해서 만들다 말고 홀드 --> 서브애님 위치 보정을 해보려 헀는데, 단순 스케일에서 어긋나는 포지션이 규칙이 없다. (스케일을 키를 걸어놓고 보면 확실함)
+	Set Scalable Biped 버튼은 척추와 쇄골의 위치를 보정해주는 서브애님까지 추가하는 작업이 필요해서 만들다 말고 홀드 --> 서브애님 위치 보정을 해보려 ?는데, 단순 스케일에서 어긋나는 포지션이 규칙이 없다. (스케일을 키를 걸어놓고 보면 확실함)
 	button uiBtnSetScalableBiped "Set Scalable Biped" tooltip:"Scale이 가능한 바이패드로 변경하고 Scale을 조정하는 헬퍼를 추가합니다."
 	*/
 	
@@ -35,7 +35,7 @@ rollout RefBones "Reference Bones Tool v0.28" width:200
 		local bb = nodeGetBoundingBox obj obj.transform		-- 로컬 바운딩 박스 포지션 값 두 개가 배열로 bb에 저장됨 bb[1], bb[2]
 		
 		if ((classof obj.baseobject) == Point) do
-		(	-- 포인트헬퍼는 점으로만 존재해서 바운딩박스를 강제로 넣엊줘야한다.
+		(	-- 포인트헬퍼는 점으로만 존재해서 바운딩박스를 강제로 넣어줘야한다.
 			bb[1].x -= obj.baseobject.size * 0.5
 			bb[1].y -= obj.baseobject.size * 0.5
 			bb[2].x += obj.baseobject.size * 0.5
@@ -221,10 +221,8 @@ tScale"
 	-- 원본이 참조하는 Ref본을 리턴한다. 원본에 Ref본 기록이 없거나 찾을 수 없으면 undefined 리턴.
 	function GetRef origin = (
 		local refBone
-		try (refBone = maxOps.getNodeByHandle (getUserProp origin IDKEYWORDTARGETHANDLE)) catch (
-			refBone = undefined
-		)
-
+		try (refBone = maxOps.getNodeByHandle (getUserProp origin IDKEYWORDTARGETHANDLE))
+		catch (refBone = undefined)
 		return refBone
 	)
 	
@@ -299,7 +297,6 @@ tScale"
 				case of (
 					(checkStr == "CREATE"):(
 						-- 바이패드를 선택한 채 Process를 눌렀음. Ref본을 생성하거나 기존 Ref본을 수정함.
-						local tReply = #yes		-- 유저의 대답을 기억하는 로컬 변수
 						local foundRefBone = GetExistRef o
 						
 						local tBone
